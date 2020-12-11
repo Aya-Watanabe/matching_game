@@ -1,0 +1,183 @@
+@charset "utf-8";
+
+ html{
+box-sizing:border-box;
+}
+*, *:before, *:after{
+    box-sizing:inherit;
+}
+
+html {
+    box-sizing: border-box;
+}
+*, *:before, *:after {
+    box-sizing: inherit;
+} 
+   
+body{
+    /* background-color:#3498db; */
+    /* background-color:#0e3150; */
+    background-image:url("images/silver-numbers.jpg");
+    background-size:cover;
+    background-repeat:no-repeat;
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:16px;
+    font-weight:bold;
+}
+
+.page-title{
+    text-align: center;
+    color:white;
+}
+
+.container{
+    max-width:650px;
+    margin:30px auto;
+}
+
+.game-info-container{
+    display:flex;
+    justify-content: space-around;
+}
+
+.game-info{
+    color:green;
+    font-size:20px;
+    font-weight:bolder;
+}
+
+
+/* CARD STAGE */
+#stage{
+    /* display:flex;
+    flex-wrap:wrap;
+    justify-content: space-between; */
+    display:grid;
+    grid-template-columns: repeat(4, auto);
+    justify-content: center;
+}
+
+@media(max-width:500px){
+    #stage{
+        grid-template-columns: repeat(2, auto);
+    }
+}
+
+.card-container{
+    perspective:100px;
+    width: 100px;
+    height:140px;
+    margin:5px;
+}
+
+.card{
+    cursor:pointer;
+    width:100%;
+    height:100%;
+    transition:0.8s;
+    position: relative;
+    transform-style: preserve-3d;
+}
+
+.card-front, .card-back{
+    width:100%;
+    height:100%;
+    text-align:center;
+    line-height: 70px;
+    border-radius:8px;
+    border:1px solid gray;
+    position: absolute;
+    top:0;
+    left:0;
+    box-shadow:0 5px 0 rgba(0,0,0,0.2);
+	backface-visibility:hidden;
+}
+
+/* Number side of card */
+.card-front{
+    background-color:white;
+    color:orange;
+    font-size:3em;
+    line-height:140px;
+    transform: rotateY(180deg);
+}
+
+/* "?" side of card*/
+.card-back{
+    background-color:orange;
+     color:white;
+     font-size:1.5em;
+}
+
+.card.open{
+    transform: rotateY(180deg);
+}
+
+#restart{
+    margin:0 auto;
+    text-decoration: none;
+    display:block;
+    background-color:green;
+    color:white;
+    width:250px;
+    height: 40px;
+    border-radius: 20px;
+    line-height:40px;
+    text-align:center;
+    font-size:18px;
+    margin-top:15px;
+    box-shadow:0 5px 0 rgba(0,0,0,0.2);
+}
+
+#restart.inactive{
+    cursor: default;
+    opacity:0.4;
+    box-shadow: none;
+    margin-top:20px;
+}
+
+/* OVERLAY */
+.overlay-text{
+display: none;
+color:white;
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:0;
+justify-content: center;
+align-items:center;
+z-index:100;
+cursor:pointer;
+}
+
+.overlay-text.visible{
+    display:flex;
+    flex-direction:column;
+    animation:overlay-glow 500ms forwards;
+}
+
+.overlay-text-big{
+    font-size:.6em;
+}
+
+.overlay-text-small{
+    font-size:.2em;
+}
+
+.overlay-text-medium{
+    font-size:.3em;
+}
+
+@keyframes overlay-glow{
+    frmo{
+        background-color:rgba(0, 0, 0, 0);
+        font-size:0;
+    }
+    to{
+        background-color:rgba(0, 0, 0, .8);
+        font-size:6.0em;
+    }
+}
+

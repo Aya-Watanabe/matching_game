@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matcing Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- <h1>Number matching</h1> -->
+    <div class="overlay-text visible">
+        <span class="overlay-text-big">MATCH THE NUMBER!!</span>
+        <span class="overlay-text-medium">Click to Start</span>
+    </div>
+    <div class="overlay-text finished" id="finished">
+        <span class="overlay-text-big">WELL DONE!!</span>
+        <p class="overlay-text-small">Time Spend: <span id="f-score">0.00</span></p>
+        <p class="overlay-text-small">Times Fliped: <span id="f-flip">0</span></p>
+        <p class="overlay-text-medium">Click to Restart</p>
+</div>
+    <!-- <h1 class="page-title">Number Matching Game</h1> -->
+    <div class="container">
+        <div class="game-info-container">
+            <div class="game-info">Timer: <span id="score">0.00</span></div>
+            <div class="game-info">Flips: <span id="flip">0</span></div>
+        </div> 
+        <div id="stage">
+            <!-- 
+                <div class="card-container">
+                <div class="card">
+                    <div class="card-front">1</div>
+                    <div class="card-back">?</div>
+                </div>
+            </div> 
+            -->
+        </div> 
+        <a href="#0" id="restart" class="inactive">Refresh?</a>
+    </div>
+  <script src="script.js"></script>
+</body>
+</html>
