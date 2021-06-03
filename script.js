@@ -11,22 +11,22 @@ let isRunning = false;
 let correctCount = 0;
 let timeoutId;
 
+createPareCards();
 
-//Functon to add cards under #stage
-function createPareCards(){
+function createPareCards(){ //add cards under #stage
 let i;
 let card;
 for(i = 1; i <= pairs; i++){
 cards.push(createCard(i));
 cards.push(createCard(i));
 }
-while(cards.length){
+while(cards.length){ //Allocat different number of pares to cards
     card = cards.splice(Math.floor(Math.random()*cards.length),1)[0];
     document.getElementById('stage').appendChild(card);
     }
 }
 
-//function to create cards
+//function to create a card
 function createCard(num){
     let container;
     let card;
@@ -39,21 +39,21 @@ function createCard(num){
     card.innerHTML = inner;
     card.className = 'card';
 
-//calling flipCard function
+    //calling flipCard function and flip sound for each card, and disabling restart btn, starting timer.
     card.addEventListener('click', function(){
-    flipCard(this);
-    // Flip sound
-        startSound.flip();
-    if(isRunning === true){
-        return;
-    }
-    isRunning = true;
-    startTime = Date.now();
-    document.getElementById('restart').className = '';
+        flipCard(this);
+        startSound.flip();// Flip sound
 
-//call runTimer
-    runTimer();
-});
+        if(isRunning === true){
+            return;
+        }
+
+        isRunning = true;
+        startTime = Date.now();
+        document.getElementById('restart').className = ''; //disabling restart btn
+
+        runTimer();//Starting timer
+    });
 
     container = document.createElement('div');
     container.appendChild(card);
@@ -62,19 +62,15 @@ function createCard(num){
     return container;
 }
 
-//calling createPareCard function.
-createPareCards();
-
 //function to Preventing opening more than 2 cards.
 function flipCard(card){
     if(firstCard !== null && secondCard !== null){
-        return;
+        return; 
     }
     if(card.className.indexOf('open') !== -1){
         return;
     }
-//add open class next to card class
-        card.className = ('card open');
+        card.className = ('card open');//add open class next to card class
         flipCount++;
         document.getElementById("flip").innerHTML = flipCount;
         document.getElementById("f-flip").innerHTML = flipCount;
@@ -83,7 +79,6 @@ function flipCard(card){
         firstCard = card;
     }else{
         secondCard = card;
-//calling check function.
         secondCard.addEventListener('transitionend', check);
   }
 }
@@ -91,70 +86,65 @@ function flipCard(card){
 //function to check the match
 function check(){
 if(firstCard.children[0].textContent !== secondCard.children[0].textContent){
-firstCard.className = 'card';
-secondCard.className = 'card';
-}else{
-    correctCount++;
+        firstCard.className = 'card';
+        secondCard.className = 'card';
+    }else{
+        correctCount++;
 
-    if(correctCount === pairs){
-//stop timer when all matched.
-    clearTimeout(timeoutId);
+        if(correctCount === pairs){ //when all matched.
 
-//victory music 
-    startSound.stopBGMusic();
-    startSound.victory();    
+        clearTimeout(timeoutId); //stop timer
 
-//Show "Finished" overlay
-    function finished(){
-        document.getElementById('finished').classList.add('visible');
-     }
-    finished();
-    } 
+        startSound.stopBGMusic(); //stop bk music 
+        startSound.victory();  //victory music 
+
+        //Show "Finished" overlay
+        function finished(){
+            document.getElementById('finished').classList.add('visible');
+            }
+            finished();
+        } 
+    }
+    secondCard.removeEventListener('transitionend', check);
+    firstCard = null;
+    secondCard = null;
 }
-secondCard.removeEventListener('transitionend', check);
-firstCard = null;
-secondCard = null;
-}
 
-//function to start timer
 function runTimer(){
-      //change text of 0.00 
-document.getElementById('score').textContent = ((Date.now() - startTime) / 1000).toFixed(2);
-document.getElementById('f-score').textContent = ((Date.now() - startTime) / 1000).toFixed(2);
-      //start running timer
+      
+document.getElementById('score').textContent = ((Date.now() - startTime) / 1000).toFixed(2);//change text of 0.00 
+document.getElementById('f-score').textContent = ((Date.now() - startTime) / 1000).toFixed(2);//change text of 0.00 
+
+//start running timer
 timeoutId = setTimeout(function(){
-    runTimer();
-},10);
+        runTimer();
+    },10);
 }
 
-//Restart
+//Run reload function when overlay is clicked
 document.getElementById('restart').addEventListener('click', reload);
-
-//Game start again
 document.getElementById('finished').addEventListener('click', reload);
 
 function reload() {
     document.location.reload();
   }
 
-//Ready functon
+//Run ready function when loaded
 if (document.readyState == 'loading') {
-    document.addEventListener('DOMContentLoaded', ready)
-} else {
-    ready()
+        document.addEventListener('DOMContentLoaded', ready)
+    } else {
+    ready();
 }
 
 function ready() {
     let overlays = Array.from(document.getElementsByClassName('overlay-text'));
     
     overlays.forEach(overlay => {
-        overlay.addEventListener('click', () => {
-            overlay.classList.remove('visible');
-            //start background music
-            startSound.starBGMusic();
+        overlay.addEventListener('click', () => { //when overlay is clicked
+            overlay.classList.remove('visible'); //remove overlay
+            startSound.starBGMusic();//start background music
         });
     });
-   
 }
 
 //AudioController class
@@ -181,7 +171,6 @@ class AudioController{
         // this.stopBGMusic();
         this.victorySound.play();
     }
-    
 }
 
 let startSound = new AudioController();
